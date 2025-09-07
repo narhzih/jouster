@@ -1,0 +1,19 @@
+###
+
+# curl -X POST http://localhost:8000/analyze/
+#    -H "Content-Type: application/json"
+#    -d '{"text": "Apple Inc. reported strong quarterly earnings today, with iPhone sales exceeding expectations. The technology company saw a 15%
+#  increase in revenue compared to last quarter, driven primarily by strong demand in international markets. CEO Tim Cook expressed optimism about
+#  future growth prospects in artificial intelligence and services."}'
+POST http://localhost:8000/analyze/
+Content-Type: application/json
+
+//{
+//  "text": "Apple Inc. reported strong quarterly earnings today, with iPhone sales exceeding expectations. The technology company saw a 15 increasein revenue compared to last quarter,  driven primarily by strongdemand in international markets. CEO Tim Cook expressed optimism about future growth prospects in artificial intelligence and services"
+//}
+{
+  "text": "Your text here"
+}
+
+###
+
