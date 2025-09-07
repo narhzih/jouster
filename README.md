@@ -1,6 +1,6 @@
-# LLM Knowledge Extractor
+# Parse Mind - LLM Text Analysis API
 
-Text analysis API that extracts structured insights using OpenAI and spaCy.
+A FastAPI service that analyzes text using OpenAI and NLTK to extract structured insights.
 
 ## Quick Start
 
@@ -8,37 +8,55 @@ Text analysis API that extracts structured insights using OpenAI and spaCy.
 # Install dependencies
 uv sync
 
-# Download spaCy model
-python -m spacy download en_core_web_sm
-
 # Set OpenAI API key
 cp .env.example .env
-# Edit .env with your API key
+# Edit .env with your OPENAI_API_KEY
 
 # Run server
 python main.py
 ```
 
-Server starts at `http://localhost:8000`
+Server runs at `http://localhost:8000`
 
 ## Usage
 
-Send text to `/analyze`:
+POST text to analyze:
 
 ```bash
 curl -X POST http://localhost:8000/analyze/ \
   -H "Content-Type: application/json" \
-  -d '{"text": "<INSERT_TEXT>"}'
+  -d '{"text": "Your text content here..."}'
 ```
 
-Returns summary, topics, sentiment, and keywords.
+Returns structured analysis:
+```json
+{
+  "summary": "Brief summary of the text",
+  "metadata": {
+    "title": "Generated or extracted title",
+    "topics": ["topic1", "topic2", "topic3"],
+    "sentiment": "positive|neutral|negative",
+    "keywords": ["keyword1", "keyword2", "keyword3"]
+  },
+  "processing_time_ms": 1500,
+  "created_at": "2025-09-07T13:24:43.123456"
+}
+```
 
-Check `/docs` for interactive API documentation.
+Interactive docs at `/docs`
 
-## Design Notes
+## Features
 
-Built with FastAPI for async LLM calls and clean service separation. Uses OpenAI function calling for reliable structured output instead of parsing. SpaCy handles keyword extraction because it's more production-ready than NLTK.
+- **LLM Analysis**: OpenAI function calling for reliable structured output
+- **Keyword Extraction**: NLTK for identifying most frequent nouns
+- **Parallel Processing**: LLM and NLP services run concurrently
+- **Error Handling**: Graceful degradation when services fail
+- **Input Validation**: Prevents analysis of insufficient content
+
+## Design Rationale
+
+Built with FastAPI for modern async support and automatic documentation. Used OpenAI function calling instead of prompt parsing for guaranteed response structure. NLTK provides reliable keyword extraction without heavy model dependencies.
 
 ## Trade-offs
 
-Time constraints led to some simplifications - basic error handling, no database persistence, and minimal test coverage. Focused on core functionality over bells and whistles.
+Prioritized working core functionality over comprehensive features due to time constraints. Limited error recovery, no database persistence, and basic test coverage. Focused on clean architecture that could be extended later.
